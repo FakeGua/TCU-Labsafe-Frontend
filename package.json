@@ -1,5 +1,5 @@
 {
-  "name": "Labsafe.tcu.edu.cn",
+  "name": "labsafe.tcu.edu.cn",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bootstrap": "^4.1.3",
     "element-ui": "^2.4.5",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
