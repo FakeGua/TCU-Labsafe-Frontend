@@ -1,29 +1,30 @@
 <template>
     <div>
-        <div class="article" v-for="(item, index) in articles" :key="index" @click="$router.push('/article/'+item.id)">
-            <div class="title h4" v-text="item.article_title"></div>
+        <div class="exampaper" v-for="(item, index) in exampapers" :key="index" @click="$router.push('/exam/exampaper/'+item.exampaper_title)">
+            <div class="title h4" v-text="item.exampaper_title"></div>
             <div class="info text-muted">
-                {{item.article_author}} | {{item.article_classify}} | {{item.article_time}}
+                {{item.addtime}}
             </div>
-            <div class="context">
+            <!-- <div class="context">
                 <div v-text="item.article_body"></div>
-            </div>
+            </div> -->
         </div>
         <div class="hint text-muted">
-            没有更多啦！
+            没有更多啦
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
-    .article {
+    .exampaper {
         box-shadow: 2px 2px 10px lightgray;
-        height: 200px;
+        height: 100px;
         width: 90%;
         margin: 16px auto;
         padding: 24px;
         border-radius: 5px;
         background: white;
+        text-align: center;
         &:hover {
             box-shadow: 2px 2px 30px lightgray;
             cursor: pointer;
@@ -50,33 +51,32 @@
 
 <script>
     import axios from 'axios';
+    import domain from '../domain';
     export default {
-        name: 'indexcategory',
         props: ['cy'],
+        name: 'exampapers',
         data: () => {
             return {
-                articles: []
+                exampapers: []
             }
         },
         mounted() {
-            axios.get(`http://localhost:8086/article/getcategory?category=${this.cy}`).then((data) => {
+            axios.get(`${domain}/exam/getexampapers?category=${this.cy}`).then((data) => {
                 data.data.forEach((element, index, arr) => {
-                    let t = new Date(element.article_time);
-                    element.article_time = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
-                    element.article_body = element.article_body.match(/[^<>/\'"-=:、（）宋体\w]/g).join('');
+                    let t = new Date(element.addtime);
+                    element.addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
                 });
-                this.articles = data.data;
+                this.exampapers = data.data;
             })
         },
         watch: {
             '$route' (to, from) {
-                axios.get(`http://localhost:8086/article/getcategory?category=${this.cy}`).then((data) => {
+                axios.get(`${domain}/exam/getexampapers?category=${this.cy}`).then((data) => {
                     data.data.forEach((element, index, arr) => {
-                        let t = new Date(element.article_time);
-                        element.article_time = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
-                        element.article_body = element.article_body.match(/[^<>/\'"-=:、（）宋体\w]/g).join('');
+                        let t = new Date(element.addtime);
+                        element.addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
                     });
-                    this.articles = data.data;
+                    this.exampapers = data.data;
                 })
             }
         }

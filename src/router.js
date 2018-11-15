@@ -3,29 +3,31 @@ import Router from 'vue-router'
 import Home from './views/Home'
 
 import IndexMenu from './components/IndexMenu'
+import IndexNewArticles from './components/IndexNewArticles'
 import IndexArticle from './components/IndexArticle'
-import IndexArticleItem from './components/IndexArticleItem'
-import IndexCategory from './components/IndexCategory'
+import IndexArticles from './components/IndexArticles'
+import ExamMenu from './components/ExamMenu'
+import ExamPapers from './components/ExamPapers'
+import ExamPaper from './components/ExamPaper'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [{
       path: '/',
-      name: 'home',
       component: Home,
       children: [{
           path: '',
           components: {
             leftmenu: IndexMenu,
-            right: IndexArticle
+            right: IndexNewArticles
           }
         },
         {
-          path: 'category/:cy',
+          path: 'article/category/:cy',
           components: {
             leftmenu: IndexMenu,
-            right: IndexCategory
+            right: IndexArticles
           },
           props: {
             right: true
@@ -35,7 +37,7 @@ export default new Router({
           path: 'article/:id',
           components: {
             leftmenu: IndexMenu,
-            right: IndexArticleItem
+            right: IndexArticle
           },
           props: {
             right: true
@@ -43,6 +45,38 @@ export default new Router({
         }
       ]
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('./views/Login')
+    },
+    {
+      path: '/exam',
+      component: () => import('./views/Exam'),
+      children: [{
+        path: '',
+        components: {
+          leftmenu: ExamMenu,
+        }
+      },{
+        path:'category/:cy',
+        components:{
+          leftmenu:ExamMenu,
+          right:ExamPapers
+        },
+        props:{
+          right:true
+        }
+      },{
+        path:'exampaper/:ep',
+        components:{
+          leftmenu:ExamMenu,
+          right:ExamPaper
+        },props:{
+          right:true
+        }
+      }]
+    }
     // {
     //   path:'/page/:id',
     //   name:'Page',

@@ -14,7 +14,10 @@
     height: 100%;
     #app {
       height: 100%;
-      min-width: 1000px;
+      min-width: 600px;
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      // -webkit-font-smoothing: antialiased;
+      // -moz-osx-font-smoothing: grayscale;
     }
   }
 </style>

@@ -5,14 +5,14 @@
     </div>
     <div class="left">
       <header class="header">
-        <img src="../assets/logo.jpg" alt="">
+        <img src="../assets/index/logo.jpg" alt="">
         <div class="title display-1">实验室安全教育网</div>
       </header>
       <router-view name="leftmenu"></router-view>
       <footer class="text-light">
         <div>天津城建大学 · 理学院</div>
         <div>地址：天津市西青区津静公路26号</div>
-        <div>电话：022-123456 | 邮编：300384</div>
+        <div>电话：23085199 | 邮编：300384</div>
       </footer>
     </div>
   </div>
@@ -26,7 +26,7 @@
       color: white;
       position: fixed;
       background-color: $tcuColor;
-      height: 100%;
+      min-height: 100%;
       width: 360px;
       top: 0;
       display: flex;
@@ -67,6 +67,11 @@
     },
     methods: {},
     computed: {},
-    mounted() {}
+    mounted() {
+      /* 兼容性判断 */
+        if(/ie/i.test(navigator.userAgent)){
+            location.href = 'http://139.219.13.39:8086/navigatorerror.html';
+        }
+    }
   }
 </script>

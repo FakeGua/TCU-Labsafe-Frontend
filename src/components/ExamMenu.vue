@@ -1,11 +1,13 @@
 <template>
     <menu>
         <ul>
-            <li @click="$router.replace('/');checkMenu($event)" style="background:#032d5c">首页</li>
-            <li v-for="(item, index) in categorys" :key="index" v-text="item" @click="$router.replace('/article/category/'+item);checkMenu($event)"></li>
+            <li @click="$router.replace('/');checkMenu($event)" style="background:#032d5c">每日一测</li>
+            <li @click="$router.replace('/');checkMenu($event)">课件资料</li>
+            <li @click="$router.replace('/exam/category/自测');checkMenu($event)">自测</li>
+            <li @click="$router.replace('/exam/category/考试');checkMenu($event)">考试</li>
+            <li @click="$router.replace('/');checkMenu($event)">个人中心</li>
+            <div class="exam" @click="$router.replace('/')">回到首页</div>
         </ul>
-        <!-- <div class="exam" @click="$router.replace('/exam')">考试中心</div> -->
-        <div class="exam" onclick="alert('敬请期待～')">考试中心</div>
     </menu>
 </template>
 
@@ -48,10 +50,10 @@
 
 <script>
     export default {
-        name: 'indexmenu',
+        name: 'exammenu',
         data: () => {
             return {
-                categorys: ['通识类', '消防安全', '化学安全', '电气安全', '辐射安全', '特种设备']
+                categorys: ['课件资料', '自测', '考试', '个人中心']
             }
         },
         methods: {
