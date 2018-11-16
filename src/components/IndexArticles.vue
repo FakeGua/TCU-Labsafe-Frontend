@@ -75,8 +75,7 @@
                 data.data.forEach((element, index, arr) => {
                     let t = new Date(element.addtime);
                     element.addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
-                    // element.article_body = element.article_body.match(/[^<>/\'"-=:、（）宋体\w]/g).join('');
-                    element.article_body = element.article_body.match(regexp).join('');
+                    element.article_body = element.article_body.match(regexp)? element.article_body.match(regexp).join(''): element.article_body;
                 });
                 this.articles = data.data;
                 this.loading = false;

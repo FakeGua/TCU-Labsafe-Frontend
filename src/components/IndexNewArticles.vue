@@ -15,7 +15,7 @@
                 {{item.article_author}} | {{item.article_category}} | {{item.addtime}}
             </div>
             <div class="context">
-               <h5 class="d-inline-block"><span class="badge badge-light badge-pill">摘要</span></h5>&nbsp;<span v-text="item.article_body"></span>
+                <h5 class="d-inline-block"><span class="badge badge-light badge-pill">摘要</span></h5>&nbsp;<span v-text="item.article_body"></span>
             </div>
         </div>
         <div v-if="!(loading) && !(loadingFail)" class="hint text-muted">
@@ -27,7 +27,7 @@
 <style lang="scss" scoped>
     .body {
         width: 90%;
-        margin:auto;
+        margin: auto;
         .banner {
             border-radius: 5px;
         }
@@ -71,8 +71,8 @@
         data: () => {
             return {
                 articles: [],
-                loading:true,
-                loadingFail:false
+                loading: true,
+                loadingFail: false
             }
         },
         mounted() {
@@ -80,14 +80,11 @@
                 data.data.forEach((element, index, arr) => {
                     let t = new Date(element.addtime);
                     element.addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
-                    // if (element.article_body.match(/[^<>/\'"-=:、（）宋体\w]/gi)) {
-                    //     element.article_body = element.article_body.match(/[^<>/\'"-=:、（）\w]/g).join('');
-                        element.article_body = element.article_body.match(regexp).join('');
-                    // }
+                    element.article_body = element.article_body.match(regexp)? element.article_body.match(regexp).join(''): element.article_body;
                 });
                 this.articles = data.data;
                 this.loading = false;
-            }).catch((err)=>{
+            }).catch((err) => {
                 this.loading = false;
                 this.loadingFail = true;
                 console.error(err);
