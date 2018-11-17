@@ -10,6 +10,7 @@ import ExamMenu from './components/ExamMenu'
 import ExamPapers from './components/ExamPapers'
 import ExamPaper from './components/ExamPaper'
 import ExamDownload from './components/ExamDownload'
+import ExamSelfstudy from './components/ExamSelfstudy'
 
 Vue.use(Router)
 
@@ -58,6 +59,7 @@ export default new Router({
         path: '',
         components: {
           leftmenu: ExamMenu,
+          right:ExamSelfstudy
         }
       },{
         path:'category/:cy',
