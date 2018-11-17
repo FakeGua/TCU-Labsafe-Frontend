@@ -9,6 +9,7 @@ import IndexArticles from './components/IndexArticles'
 import ExamMenu from './components/ExamMenu'
 import ExamPapers from './components/ExamPapers'
 import ExamPaper from './components/ExamPaper'
+import ExamDownload from './components/ExamDownload'
 
 Vue.use(Router)
 
@@ -74,6 +75,12 @@ export default new Router({
           right:ExamPaper
         },props:{
           right:true
+        }
+      },{
+        path:'download',
+        components:{
+          leftmenu:ExamMenu,
+          right:ExamDownload
         }
       }]
     }

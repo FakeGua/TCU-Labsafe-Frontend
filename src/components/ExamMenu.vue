@@ -1,11 +1,11 @@
 <template>
     <menu>
         <ul>
-            <li @click="$router.replace('/');checkMenu($event)" style="background:#032d5c">每日一测</li>
-            <li @click="$router.replace('/');checkMenu($event)">课件资料</li>
+            <li @click="$router.replace('/exam');checkMenu($event)" style="background:#032d5c">每日一测</li>
+            <li @click="$router.replace('/exam/download');checkMenu($event)">课件资料</li>
             <li @click="$router.replace('/exam/category/自测');checkMenu($event)">自测</li>
             <li @click="$router.replace('/exam/category/考试');checkMenu($event)">考试</li>
-            <li @click="$router.replace('/');checkMenu($event)">个人中心</li>
+            <li @click="$router.replace('/exam');checkMenu($event)">个人中心</li>
             <div class="exam" @click="$router.replace('/')">回到首页</div>
         </ul>
     </menu>
