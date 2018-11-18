@@ -1,13 +1,14 @@
 <template>
     <div>
         <div class="exampaper" v-for="(item, index) in exampapers" :key="index" @click="$router.push('/exam/exampaper/'+item.exampaper_title)">
-            <div class="title h4" v-text="item.exampaper_title"></div>
-            <div class="info text-muted">
-                {{item.addtime}}
+        <img src="../assets/exam/exampapersTitle.svg" alt="">
+            <div>
+                <div class="title h4" v-text="item.exampaper_title"></div>
+                <div class="info text-muted">
+                    {{item.addtime}}
+                </div>
             </div>
-            <!-- <div class="context">
-                <div v-text="item.article_body"></div>
-            </div> -->
+        <img src="../assets/exam/exampapersTitle.svg" alt="">
         </div>
         <div class="hint text-muted">
             没有更多啦
@@ -25,6 +26,8 @@
         border-radius: 5px;
         background: white;
         text-align: center;
+        display: flex;
+        justify-content: space-around;
         &:hover {
             box-shadow: 2px 2px 30px lightgray;
             cursor: pointer;

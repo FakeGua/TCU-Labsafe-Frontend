@@ -11,6 +11,7 @@ import ExamPapers from './components/ExamPapers'
 import ExamPaper from './components/ExamPaper'
 import ExamDownload from './components/ExamDownload'
 import ExamSelfstudy from './components/ExamSelfstudy'
+import ExamUser from './components/ExamUser'
 
 Vue.use(Router)
 
@@ -57,6 +58,12 @@ export default new Router({
       component: () => import('./views/Exam'),
       children: [{
         path: '',
+        components: {
+          leftmenu: ExamMenu,
+          right:ExamUser
+        }
+      },{
+        path: 'selfstudy',
         components: {
           leftmenu: ExamMenu,
           right:ExamSelfstudy

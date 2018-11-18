@@ -76,7 +76,7 @@
 
 <script>
     import axios from 'axios'
-    import domain from 'domain'
+    import domain from '../domain'
     export default {
         name: 'login',
         data: () => {
@@ -93,8 +93,10 @@
                         username: formData.get('username'),
                         password: formData.get('password')
                     }).then((data) => {
-                        console.log(data);
                         document.getElementById('login-hint').setAttribute('value', `${data.data}`);
+                        this.$store.state.isLogined = true;
+                        this.$store.state.username = formData.get('username');
+                        this.$router.replace('/exam');
                     }).catch((err)=>{
                         console.error(err);
                     })
@@ -111,7 +113,6 @@
                         username: formData.get('username'),
                         password: formData.get('password')
                     }).then((data) => {
-                        console.log(data);
                         document.getElementById('register-hint').setAttribute('value', `${data.data}`);
                     }).catch((err)=>{
                         console.error(err);
