@@ -130,7 +130,7 @@
             }
         },
         mounted() {
-            axios.get(`${domain}/exam/getquestions?exampaper=${this.ep}`).then((data) => {
+            axios.get(`${domain}/exam/getexamquestions?exampaper=${this.ep}`).then((data) => {
                 if (data.data.length != 0) {
                     for (let i = 0; i < data.data.length; i++) {
                         let t = new Date(data.data[i].addtime);
