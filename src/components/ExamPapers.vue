@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="exampaper" v-for="(item, index) in exampapers" :key="index" @click="$router.push('/exam/exampaper/'+item.exampaper_title)">
+        <div class="exampaper" v-for="(item, index) in exampapers" :key="index" @click="$router.push('/exampaper/'+item.exampaper_title)">
         <img src="../assets/exam/exampapersTitle.svg" alt="">
             <div>
                 <div class="title h4" v-text="item.exampaper_title"></div>

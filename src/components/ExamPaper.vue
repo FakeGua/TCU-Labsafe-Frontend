@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="body">
         <div v-if="questions.length>0" class="exampaper">
             <img src="../assets/index/back.svg" alt="" @click="$router.go(-1)">
             <h4 v-text="questions[0].question_exampaper"></h4>
@@ -41,13 +41,18 @@
 </template>
 
 <style lang="scss" scoped>
+    $tcuColor:rgb(4, 60, 122);
+.body{
+    min-height: 100%;
+    background: $tcuColor;
+    padding: 30px 0;
     .exampaper {
         position: relative;
-        box-shadow: 2px 2px 10px lightgray;
+        // box-shadow: 2px 2px 10px lightgray;
         width: 90%;
         margin: auto;
         padding: 66px;
-        border-radius: 5px;
+        border-radius: 10px;
         background: white;
         overflow: hidden;
         img {
@@ -103,6 +108,7 @@
             }
         }
     }
+}
 </style>
 
 

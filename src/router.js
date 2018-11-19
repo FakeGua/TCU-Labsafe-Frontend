@@ -60,38 +60,35 @@ export default new Router({
         path: '',
         components: {
           leftmenu: ExamMenu,
-          right:ExamUser
+          right: ExamUser
         }
-      },{
+      }, {
         path: 'selfstudy',
         components: {
           leftmenu: ExamMenu,
-          right:ExamSelfstudy
+          right: ExamSelfstudy
         }
-      },{
-        path:'category/:cy',
-        components:{
-          leftmenu:ExamMenu,
-          right:ExamPapers
+      }, {
+        path: 'category/:cy',
+        components: {
+          leftmenu: ExamMenu,
+          right: ExamPapers
         },
-        props:{
-          right:true
+        props: {
+          right: true
         }
-      },{
-        path:'exampaper/:ep',
-        components:{
-          leftmenu:ExamMenu,
-          right:ExamPaper
-        },props:{
-          right:true
-        }
-      },{
-        path:'download',
-        components:{
-          leftmenu:ExamMenu,
-          right:ExamDownload
+      }, {
+        path: 'download',
+        components: {
+          leftmenu: ExamMenu,
+          right: ExamDownload
         }
       }]
+    },
+    {
+      path: '/exampaper/:ep',
+      component: () => import('./components/ExamPaper'),
+      props: true
     }
     // {
     //   path:'/page/:id',
