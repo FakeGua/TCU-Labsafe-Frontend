@@ -13,14 +13,14 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="row">
-                            <div class="exampapers" v-for="(item, index) in oddInFinishedExampapers" :key="index">
+                            <div class="exampapers" v-for="(item, index) in oddUnFinishedExampapers" :key="index">
                                 <div class="h5">{{item.exampaper_title}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="row">
-                            <div class="exampapers" v-for="(item, index) in evenInFinishedExampapers" :key="index">
+                            <div class="exampapers" v-for="(item, index) in evenUnFinishedExampapers" :key="index">
                                 <div class="h5">{{item.exampaper_title}}</div>
                             </div>
                         </div>
@@ -117,20 +117,20 @@
         name: 'examuser',
         data() {
             return {
-                inFinishedExampapers: [],
+                unFinishedExampapers: [],
                 finishedExampapers: [],
                 exampapers: []
             }
         },
         computed: {
-            oddInFinishedExampapers() {
-                let oddInFinishedExampapers = [];
-                for (let i = 0; i < this.inFinishedExampapers.length; i++) {
+            oddUnFinishedExampapers() {
+                let oddUnFinishedExampapers = [];
+                for (let i = 0; i < this.unFinishedExampapers.length; i++) {
                     if (i % 2 == 0) {
-                        oddInFinishedExampapers.push(this.inFinishedExampapers[i]);
+                        oddUnFinishedExampapers.push(this.unFinishedExampapers[i]);
                     }
                 }
-                return oddInFinishedExampapers;
+                return oddUnFinishedExampapers;
             },
             oddFinishedExampapers() {
                 let oddFinishedExampapers = [];
@@ -141,14 +141,14 @@
                 }
                 return oddFinishedExampapers;
             },
-            evenInFinishedExampapers() {
-                let evenInFinishedExampapers = [];
-                for (let i = 0; i < this.inFinishedExampapers.length; i++) {
+            evenUnFinishedExampapers() {
+                let evenUnFinishedExampapers = [];
+                for (let i = 0; i < this.unFinishedExampapers.length; i++) {
                     if (i % 2 != 0) {
-                        evenInFinishedExampapers.push(this.inFinishedExampapers[i]);
+                        evenUnFinishedExampapers.push(this.unFinishedExampapers[i]);
                     }
                 }
-                return evenInFinishedExampapers;
+                return evenUnFinishedExampapers;
             },
             evenFinishedExampapers() {
                 let evenFinishedExampapers = [];
@@ -176,7 +176,7 @@
                                 continue;
                             }
                         }
-                        this.inFinishedExampapers.push(this.exampapers[i]);
+                        this.unFinishedExampapers.push(this.exampapers[i]);
                     }
                 })
             }

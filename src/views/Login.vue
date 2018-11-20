@@ -94,17 +94,19 @@
                         password: formData.get('password')
                     }).then((data) => {
                         document.getElementById('login-hint').setAttribute('value', `${data.data}`);
-                        this.$store.state.isLogined = true;
-                        this.$store.state.username = formData.get('username');
-                        this.$router.replace('/exam');
-                    }).catch((err)=>{
+                        if (data.data == '登录成功！') {
+                            this.$store.state.isLogined = true;
+                            this.$store.state.username = formData.get('username');
+                            this.$router.replace('/exam');
+                        }
+                    }).catch((err) => {
                         console.error(err);
                     })
                 } else {
                     document.getElementById('login-hint').setAttribute('value', '请输入正确的学号和密码！');
                 }
             },
-            onRegister(){
+            onRegister() {
                 document.getElementById('register-hint').setAttribute('value', '请稍等...');
                 let x = document.getElementById('login');
                 let formData = new FormData(x);
@@ -114,7 +116,7 @@
                         password: formData.get('password')
                     }).then((data) => {
                         document.getElementById('register-hint').setAttribute('value', `${data.data}`);
-                    }).catch((err)=>{
+                    }).catch((err) => {
                         console.error(err);
                     })
                 } else {
