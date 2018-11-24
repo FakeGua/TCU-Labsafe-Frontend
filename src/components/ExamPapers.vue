@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="exampaper" v-for="(item, index) in exampapers" :key="index" @click="$router.push('/exampaper/'+item.exampaper_title)">
+        <div class="exampaper" v-for="(item, index) in exampapers" :key="index" @click="judgeFinished(item)">
         <img src="../assets/exam/exampapersTitle.svg" alt="">
             <div>
                 <div class="title h4" v-text="item.exampaper_title"></div>
@@ -61,6 +61,15 @@
         data: () => {
             return {
                 exampapers: []
+            }
+        },
+        methods:{
+            judgeFinished(item){
+                if(this.$store.state.unFinishedExampapers.includes(item.exampaper_title)){
+                    this.$router.push('/exampaper/'+item.exampaper_title);
+                }else{
+                    this.$message.error('你已经做过这套试卷了。');
+                }
             }
         },
         mounted() {

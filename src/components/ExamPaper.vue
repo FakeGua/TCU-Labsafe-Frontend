@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="btn btn-success w-100" @click="submitAnswer()" v-text="submitMsg"></div>
+                <div class="btn btn-success w-100" @click="submitAnswer()">我已确认完成，提交吧！</div>
                 <div class="hint">
                     <div class=" text-center"><span class="">距离考试结束还有</span><span>{{countDownHour}}:{{countDownMinute}}</span></div>
                     <div class="question-items" id="question-items">
@@ -57,8 +57,7 @@
         background: $tcuColor; // padding: 30px 0;
         overflow: auto;
         .hint {
-            background: white;
-            height: 200px;
+            background: white; // height: 200px;
             width: 200px;
             box-shadow: 2px 2px 10px lightgray;
             position: fixed;
@@ -157,7 +156,7 @@
             return {
                 questions: [],
                 answers: [],
-                chooseOptions: [],
+                choosedOptions: [],
                 countDown: 3600,
                 submitMsg: '我已确认完成，提交'
             }
@@ -197,9 +196,9 @@
                 }
             })
         },
-        watch:{
-            countDown(){
-                if(this.countDown < 0){
+        watch: {
+            countDown() {
+                if (this.countDown < 0) {
                     alert('考试结束。');
                     this.$router.go(-1);
                 }
@@ -207,7 +206,7 @@
         },
         methods: {
             chooseOption(index, option, mark, event) {
-                this.chooseOptions[index] = {
+                this.choosedOptions[index] = {
                     option,
                     mark
                 };
@@ -229,20 +228,43 @@
                 }
             },
             submitAnswer() {
-                if (this.chooseOptions.includes(undefined) || this.chooseOptions.length == 0) {
-                    this.submitMsg = '还有题目没答喔！';
-                    setTimeout(() => {
-                        this.submitMsg = '我已确认完成，提交';
-                    }, 2000);
+                if (this.choosedOptions.includes(undefined) || this.choosedOptions.length != this.answers.length) {
+                    this.$message.error('还有题目没答！');
                 } else {
-                    this.submitMsg = '提交中...';
+                    this.$message('提交中...');
                     let score = this.allMarks;
                     for (let i = 0; i < this.answers.length; i++) {
-                        if (this.answers[i] != this.chooseOptions[i].option) {
-                            score -= this.chooseOptions[i].mark;
+                        if (this.answers[i] != this.choosedOptions[i].option) {
+                            score -= this.choosedOptions[i].mark;
                         }
                     }
-                    this.submitMsg = `你的得分为${score}分`;
+                    //将分数记录上传到服务器
+                    let o = [];
+                    this.choosedOptions.forEach(item => {
+                        o.push(item.option);
+                    })
+                    axios.post(`${domain}/exam/addfinishedexampaper`, {
+                        username: this.$store.state.username,
+                        finishedExampaper: this.ep,
+                        finishedScore: score,
+                        finishedOptions: o
+                    }).then(() => {
+                        if (score >= 60) {
+                            this.$message.closeAll();
+                            this.$alert(`你的成绩为${score},恭喜及格。`);
+                        } else {
+                            this.$message.closeAll();
+                            this.$alert(`你的成绩为${score}，还需要继续努力啊！`,'提交成功',{
+                            confirmButtonText: '我知道了',
+                            callback:()=>{
+                                this.$router.replace('/exam');
+                            }
+                        });
+                        }
+                    }).catch(err => {
+                        this.$message.error('出错啦，请联系管理员。');
+                        console.error(err);
+                    })
                 }
             }
         }
