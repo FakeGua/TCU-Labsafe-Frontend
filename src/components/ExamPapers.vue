@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="exampaper" v-for="(item, index) in exampapers" :key="index" @click="judgeFinished(item)">
-        <img src="../assets/exam/exampapersTitle.svg" alt="">
+            <img src="../assets/exam/exampapersTitle.svg" alt="">
             <div>
                 <div class="title h4" v-text="item.exampaper_title"></div>
                 <div class="info text-muted">
                     {{item.addtime}}
                 </div>
             </div>
-        <img src="../assets/exam/exampapersTitle.svg" alt="">
+            <img src="../assets/exam/exampapersTitle.svg" alt="">
         </div>
         <div class="hint text-muted">
             没有更多啦
@@ -63,33 +63,33 @@
                 exampapers: []
             }
         },
-        methods:{
-            judgeFinished(item){
-                if(this.$store.state.unFinishedExampapers.includes(item.exampaper_title)){
-                    this.$router.push('/exampaper/'+item.exampaper_title);
-                }else{
-                    this.$message.error('你已经做过这套试卷了。');
-                }
-            }
-        },
-        mounted() {
-            axios.get(`${domain}/exam/getexampapers?category=${this.cy}`).then((data) => {
-                data.data.forEach((element, index, arr) => {
-                    let t = new Date(element.addtime);
-                    element.addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
-                });
-                this.exampapers = data.data;
-            })
-        },
-        watch: {
-            '$route' (to, from) {
+        methods: {
+            initPage() {
                 axios.get(`${domain}/exam/getexampapers?category=${this.cy}`).then((data) => {
                     data.data.forEach((element, index, arr) => {
                         let t = new Date(element.addtime);
                         element.addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
                     });
                     this.exampapers = data.data;
+                }).catch(err => {
+                    console.error(err);
+                    this.$message.error('出错了，请检查网络或联系管理员。');
                 })
+            },
+            judgeFinished(item) {
+                if (this.$store.state.unFinishedExampapers.includes(item.exampaper_title)) {
+                    this.$router.push('/exampaper/' + item.exampaper_title);
+                } else {
+                    this.$message.error('你已经做过这套试卷了。');
+                }
+            }
+        },
+        mounted() {
+            this.initPage();
+        },
+        watch: {
+            '$route' (to, from) {
+                this.initPage();
             }
         }
     }

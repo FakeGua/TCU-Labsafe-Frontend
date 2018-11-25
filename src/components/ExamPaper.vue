@@ -194,6 +194,9 @@
                     }
                     this.questions = data.data;
                 }
+            }).catch(err => {
+                console.error(err);
+                this.$message.error('出错了，请检查网络或联系管理员。');
             })
         },
         watch: {
@@ -254,12 +257,12 @@
                             this.$alert(`你的成绩为${score},恭喜及格。`);
                         } else {
                             this.$message.closeAll();
-                            this.$alert(`你的成绩为${score}，还需要继续努力啊！`,'提交成功',{
-                            confirmButtonText: '我知道了',
-                            callback:()=>{
-                                this.$router.replace('/exam');
-                            }
-                        });
+                            this.$alert(`你的成绩为${score}，还需要继续努力啊！`, '提交成功', {
+                                confirmButtonText: '我知道了',
+                                callback: () => {
+                                    this.$router.replace('/exam');
+                                }
+                            });
                         }
                     }).catch(err => {
                         this.$message.error('出错啦，请联系管理员。');

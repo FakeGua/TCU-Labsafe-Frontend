@@ -14,7 +14,12 @@
 <style lang="scss" scoped>
     $tcuColor:rgb(4, 60, 122);
     menu {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         padding: 0;
+        width: 80%;
         ul {
             font-size: 18px;
             padding: 0;

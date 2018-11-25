@@ -128,7 +128,42 @@
             }
         },
         methods: {
-            updateUsername() {
+            updateUsername() {},
+            initPage() {
+                if (this.$store.state.username) {
+                    axios.get(`${domain}/exam/getexampapers`).then(data => {
+                        this.exampapers = data.data;
+                        this.exampapers.forEach(item => {
+                            let t = new Date(item.addtime);
+                            item.addtime = `${t.getFullYear()}年${t.getMonth()+1}月${t.getDate()}日`;
+                        })
+                        axios.get(`${domain}/exam/getfinishedexampapers?username=${this.$store.state.username}`).then(data => {
+                            this.finishedExampapers = data.data;
+                            this.finishedExampapers.forEach(item => {
+                                let t = new Date(item.addtime);
+                                item.addtime = `${t.getFullYear()}年${t.getMonth()+1}月${t.getDate()}日`;
+                            })
+                            //筛选出未完成试卷
+                            this.unFinishedExampapers = this.exampapers;
+                            for (let i = 0; i < this.unFinishedExampapers.length; i++) {
+                                for (let j = 0; j < this.finishedExampapers.length; j++) {
+                                    if (this.unFinishedExampapers[i].exampaper_title == this.finishedExampapers[j].finished_exampaper) {
+                                        this.unFinishedExampapers.splice(i, 1);
+                                    }
+                                }
+                            }
+                            //赋值到store
+                            let c = [];
+                            this.unFinishedExampapers.forEach(item => {
+                                c.push(item.exampaper_title);
+                            })
+                            this.$store.state.unFinishedExampapers = c;
+                        })
+                    }).catch(err => {
+                        console.error(err);
+                        this.$message.error('出错了，请检查网络或联系管理员。');
+                    })
+                }
             }
         },
         computed: {
@@ -170,40 +205,12 @@
             }
         },
         mounted() {
-            if (this.$store.state.username) {
-                axios.get(`${domain}/exam/getexampapers`).then((data) => {
-                    this.exampapers = data.data;
-                    this.exampapers.forEach(item => {
-                        let t = new Date(item.addtime);
-                        item.addtime = `${t.getFullYear()}年${t.getMonth()+1}月${t.getDate()}日`;
-                    })
-                    axios.get(`${domain}/exam/getfinishedexampapers?username=${this.$store.state.username}`).then((data) => {
-                        this.finishedExampapers = data.data;
-                        this.finishedExampapers.forEach(item => {
-                            let t = new Date(item.addtime);
-                            item.addtime = `${t.getFullYear()}年${t.getMonth()+1}月${t.getDate()}日`;
-                        })
-                        //筛选出未完成试卷
-                        this.unFinishedExampapers = this.exampapers;
-                        this.unFinishedExampapers.forEach((item, index) => {
-                            this.finishedExampapers.forEach(item2 => {
-                                if (item.exampaper_title == item2.finished_exampaper) {
-                                    this.unFinishedExampapers.splice(index, 1);
-                                }
-                            })
-                        })
-                        //赋值到store
-                        let c = [];
-                        this.unFinishedExampapers.forEach(item => {
-                            c.push(item.exampaper_title);
-                        })
-                        this.$store.state.unFinishedExampapers = c;
-                    })
-                }).catch(err => {
-                    console.error(err);
-                    this.$message.error('出错了，请检查网络或联系管理员。');
-                })
-            }
+            this.initPage();
         },
+        // watch: {
+        //     '$route' (to, from) {
+        //         this.initPage();
+        //     }
+        // }
     }
 </script>

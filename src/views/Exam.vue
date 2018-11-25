@@ -12,7 +12,7 @@
             <footer class="text-light">
                 <div>天津城建大学 · 理学院</div>
                 <div>地址：天津市西青区津静公路26号</div>
-                <div>电话：022-123456 | 邮编：300384</div>
+                <div>电话：23085199 | 邮编：300384</div>
             </footer>
         </div>
     </div>
@@ -29,18 +29,24 @@
             min-height: 100%;
             width: 360px;
             top: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
             .header {
                 text-align: center;
                 .title {
                     font-size: 24px;
                     padding: 10px;
                 }
+                position: absolute;
+                top: 20px;
+                left:50%;
+                width: 360px;
+                margin-left: -180px;
             }
             footer {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                width: 200px;
+                margin-left: -100px;
                 padding-top: 60px;
                 text-align: center;
                 font-size: 12px;

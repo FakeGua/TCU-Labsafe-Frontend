@@ -35,12 +35,22 @@
       align-items: center;
       .header {
         text-align: center;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        width: 360px;
+        margin-left: -180px;
         .title {
           font-size: 24px;
           padding: 10px;
         }
       }
       footer {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        width: 200px;
+        margin-left: -100px;
         padding-top: 60px;
         text-align: center;
         font-size: 12px;
@@ -69,9 +79,9 @@
     computed: {},
     mounted() {
       /* 兼容性判断 */
-        if(/ie/i.test(navigator.userAgent)){
-            location.href = 'http://139.219.13.39:8086/navigatorerror.html';
-        }
+      if (/ie/i.test(navigator.userAgent)) {
+        location.href = 'http://139.219.13.39:8086/navigatorerror.html';
+      }
     }
   }
 </script>

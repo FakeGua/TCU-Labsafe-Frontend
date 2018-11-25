@@ -107,12 +107,13 @@
                     element.addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
                 });
                 this.files = data.data;
-            }).catch((err) => {
+            }).catch(err => {
                 console.error(err);
+                this.$message.error('出错了，请检查网络或联系管理员。');
             })
         },
         methods: {
-            downloadFile(fileName,fileCategory) {
+            downloadFile(fileName, fileCategory) {
                 window.open(`${domain}/exam/download/${fileName}.${fileCategory}`);
             }
         }

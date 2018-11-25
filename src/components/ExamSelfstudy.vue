@@ -125,6 +125,9 @@
                     }
                     this.questions = data.data;
                 }
+            }).catch(err => {
+                console.error(err);
+                this.$message.error('出错了，请检查网络或联系管理员。');
             })
         },
         methods: {

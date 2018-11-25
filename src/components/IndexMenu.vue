@@ -3,8 +3,8 @@
         <ul>
             <li @click="$router.replace('/');checkMenu($event)" style="background:#032d5c">首页</li>
             <li v-for="(item, index) in categorys" :key="index" v-text="item" @click="$router.replace('/article/category/'+item);checkMenu($event)"></li>
+            <div class="exam" @click="$router.replace('/exam')">考试中心</div>
         </ul>
-        <div class="exam" @click="$router.replace('/exam')">考试中心</div>
         <!-- <div class="exam" onclick="alert('敬请期待～')">考试中心</div> -->
     </menu>
 </template>
@@ -13,6 +13,11 @@
     $tcuColor:rgb(4, 60, 122);
     menu {
         padding: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
         ul {
             font-size: 18px;
             padding: 0;
