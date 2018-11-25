@@ -9,15 +9,41 @@
                 <form onsubmit="return false" id="login">
                     <div class="login-info">
                         <input class="username" name="username" type="text" placeholder="请输入10位学号" pattern="1[4-9](0[1-9]|1[0-5])(0[1-9]|1[0-5])(0[1-9]|1[0-5])(0[1-9]|[123456][0-9])" required>
-                        <input class="password" name="password" type="password" placeholder="请输入6-8位无符号密码" pattern="[a-zA-z0-9]{6,8}" @keyup.enter="onLogin" required>
+                        <input class="password" name="password" type="password" placeholder="请输入6-8位无符号密码" pattern="[a-zA-z0-9]{6,8}" @keyup.enter="$message('回车在这里不管用喔～')" required>
                     </div>
                 </form>
                 <div class="login-button">
                     <input id="login-hint" class="btn btn-success" type="submit" value="登录" @click="onLogin" @blur="resetValue">
-                    <input id="register-hint" class="btn btn-dark" type="button" value="注册" @click="onRegister" @blur="resetValue">
+                    <input id="register-hint" class="btn btn-dark" type="button" value="注册" @click="dialogFormVisible = true" @blur="resetValue">
                 </div>
             </div>
         </div>
+        <el-dialog class="register" title="注册" :visible.sync="dialogFormVisible">
+            <form onsubmit="return false" id="register">
+                <div class="register-box">
+                    <el-row :gutter="20">
+                        <el-col :span="12">
+                            <label for="username">学号&nbsp;&nbsp;</label><input class="username" name="username" type="text" placeholder="请输入10位学号" pattern="1[4-9](0[1-9]|1[0-5])(0[1-9]|1[0-5])(0[1-9]|1[0-5])(0[1-9]|[123456][0-9])" required>
+                        </el-col>
+                        <el-col :span="12">
+                            <label for="password">密码&nbsp;&nbsp;</label><input class="password" name="password" type="password" placeholder="请输入6-8位无符号密码" pattern="[a-zA-z0-9]{6,8}" @keyup.enter="$message('回车在这里不管用喔～')" required>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="20" style="paddingTop:20px">
+                        <el-col :span="8">
+                            <label for="name">姓名&nbsp;&nbsp;</label><input class="name" name="name" type="text" placeholder="请输入2-10字姓名" pattern="[\u4e00-\u9fa5]{2,10}" required>
+                        </el-col>
+                        <el-col :span="16">
+                            <label for="phone">手机号&nbsp;&nbsp;</label><input class="phone" name="phone" type="phone" placeholder="请输入11位手机号" pattern="1[0-9]{10}" @keyup.enter="$message('回车在这里不管用喔～')" required>
+                        </el-col>
+                    </el-row>
+                </div>
+            </form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="onRegister">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -71,6 +97,19 @@
                 }
             }
         }
+        .register {
+            .register-box {
+                label {
+                    font-size: 16px;
+                }
+                input {
+                    padding: 10px;
+                    border: 1px solid lightgray;
+                    border-radius: 5px;
+                    width: 80%;
+                }
+            }
+        }
     }
 </style>
 
@@ -80,7 +119,9 @@
     export default {
         name: 'login',
         data: () => {
-            return {}
+            return {
+                dialogFormVisible: false,
+            }
         },
         mounted() {},
         methods: {
@@ -93,39 +134,49 @@
                         username: formData.get('username'),
                         password: formData.get('password')
                     }).then((data) => {
-                        document.getElementById('login-hint').setAttribute('value', `${data.data}`);
-                        if (data.data == '登录成功！') {
+                        document.getElementById('login-hint').setAttribute('value', `${data.data.msg}`);
+                        if (data.data.canLogin) {
+                            let userInfo = data.data.data;
                             this.$store.state.isLogined = true;
-                            this.$store.state.username = formData.get('username');
+                            this.$store.state.username = userInfo.username;
+                            this.$store.state.name = userInfo.user_name;
+                            this.$store.state.phone = userInfo.user_phone;
                             this.$router.replace('/exam');
                         }
                     }).catch((err) => {
                         console.error(err);
                     })
                 } else {
-                    document.getElementById('login-hint').setAttribute('value', '请输入正确的学号和密码！');
+                    document.getElementById('login-hint').setAttribute('value', '请输入格式正确的学号和密码！');
                 }
             },
             onRegister() {
-                document.getElementById('register-hint').setAttribute('value', '请稍等...');
-                let x = document.getElementById('login');
+                let x = document.getElementById('register');
                 let formData = new FormData(x);
                 if (x.checkValidity()) {
+                    this.$message('正在注册...');
                     axios.post(`${domain}/register`, {
                         username: formData.get('username'),
-                        password: formData.get('password')
+                        password: formData.get('password'),
+                        name: formData.get('name'),
+                        phone: formData.get('phone')
                     }).then((data) => {
-                        document.getElementById('register-hint').setAttribute('value', `${data.data}`);
+                        if(data.data.canRegister){                        
+                            this.dialogFormVisible = false;
+                            this.$message.success(data.data.msg);
+                        }else{
+                            this.$message.error(data.data.msg);
+                        }
                     }).catch((err) => {
                         console.error(err);
+                        this.$message.error('注册失败，请检查网络或联系管理员。')
                     })
                 } else {
-                    document.getElementById('register-hint').setAttribute('value', '请输入正确的学号和密码！');
+                    this.$message.error('请输入格式正确的值。');
                 }
             },
             resetValue() {
                 document.getElementById('login-hint').setAttribute('value', '登录');
-                document.getElementById('register-hint').setAttribute('value', '注册');
             }
         }
     }

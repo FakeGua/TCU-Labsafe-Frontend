@@ -2,6 +2,7 @@
     <div class="body">
         <div class="header">
             <div class="head" @click="updateUsername">
+                <div class="head-text" v-text="headText"></div>
             </div>
             <div class="h3">你好 ，{{this.$store.state.name}} 。</div>
         </div>
@@ -79,6 +80,18 @@
                 background: white;
                 border-radius: 150px;
                 border: 6px solid gainsboro;
+                overflow: hidden;
+                position: relative;
+                .head-text {
+                    position: absolute;
+                    color: lightgray;
+                    font-size: 100px;
+                    width: 200px;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%,-50%);
+                    text-align: center;
+                }
             }
         }
         .content {
@@ -105,11 +118,11 @@
                     left: -20px;
                     width: 120px;
                 }
-                &:hover {
-                    box-shadow: 2px 2px 30px lightgray;
-                    cursor: pointer;
-                    transition: .4s;
-                }
+                // &:hover {
+                //     box-shadow: 2px 2px 30px lightgray;
+                //     cursor: pointer;
+                //     transition: .4s;
+                // }
             }
         }
     }
@@ -167,6 +180,11 @@
             }
         },
         computed: {
+            headText(){
+                let c = this.$store.state.name.split('');
+                console.log(c);
+                return `${c[c.length-2]}${c[c.length-1]}`
+            },
             oddUnFinishedExampapers() {
                 let oddUnFinishedExampapers = [];
                 for (let i = 0; i < this.unFinishedExampapers.length; i++) {
