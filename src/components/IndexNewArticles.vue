@@ -64,8 +64,8 @@
 
 <script>
     import axios from 'axios';
-    import domain from '../domain';
-    import regexp from '../regexp';
+    import domain from '../libs/domain';
+    import regexp from '../libs/regexp';
     export default {
         name: 'indexarticle',
         data: () => {

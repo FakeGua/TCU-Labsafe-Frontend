@@ -148,7 +148,7 @@
 
 <script>
     import axios from 'axios';
-    import domain from '../domain';
+    import domain from '../libs/domain';
     export default {
         name: 'exampaper',
         props: ['ep'],
@@ -254,7 +254,12 @@
                     }).then(() => {
                         if (score >= 60) {
                             this.$message.closeAll();
-                            this.$alert(`你的成绩为${score},恭喜及格。`);
+                            this.$alert(`你的成绩为${score},恭喜及格。`, '提交成功', {
+                                confirmButtonText: '我知道了',
+                                callback: () => {
+                                    this.$router.replace('/exam');
+                                }
+                            });
                         } else {
                             this.$message.closeAll();
                             this.$alert(`你的成绩为${score}，还需要继续努力啊！`, '提交成功', {

@@ -130,7 +130,7 @@
 
 <script>
     import axios from 'axios'
-    import domain from '../domain'
+    import domain from '../libs/domain'
     export default {
         name: 'examuser',
         data() {

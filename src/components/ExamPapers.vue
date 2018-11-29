@@ -54,7 +54,7 @@
 
 <script>
     import axios from 'axios';
-    import domain from '../domain';
+    import domain from '../libs/domain';
     export default {
         props: ['cy'],
         name: 'exampapers',
@@ -78,7 +78,13 @@
             },
             judgeFinished(item) {
                 if (this.$store.state.unFinishedExampapers.includes(item.exampaper_title)) {
-                    this.$router.push('/exampaper/' + item.exampaper_title);
+                    this.$confirm('考试时间为60分钟，请确保考试途中网络畅通以及无他人干扰。', '即将考试', {
+                        confirmButtonText: '我已明白',
+                        cancelButtonText: '再等等',
+                        type: 'warning'
+                    }).then((result) => {
+                        this.$router.push('/exampaper/' + item.exampaper_title);
+                    })
                 } else {
                     this.$message.error('你已经做过这套试卷了。');
                 }
