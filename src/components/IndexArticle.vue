@@ -2,11 +2,11 @@
     <div>
         <div class="article">
             <img src="../assets/index/back.svg" alt="" @click="$router.go(-1)">
-            <h4 v-text="article.article_title"></h4>
-            <div class="text-muted">{{article.article_author}} {{article.article_category}} {{article.addtime}}</div>
+            <h4 v-text="article.articleTitle"></h4>
+            <div class="text-muted">{{article.articleAuthor}} {{article.articleCategory}} {{article.addtime}}</div>
             <hr>
             <br>
-            <div v-html="article.article_body"></div>
+            <div v-html="article.articleBody"></div>
         </div>
     </div>
 </template>
@@ -45,12 +45,12 @@
             }
         },
         mounted() {
-            axios.get(`${domain}/article/getarticle?id=${this.id}`).then((data) => {
-                let t = new Date(data.data[0].addtime);
-                data.data[0].addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
-                data.data[0].article_author = `${data.data[0].article_author} |`;
-                data.data[0].article_category = `${data.data[0].article_category} |`;
-                this.article = data.data[0];
+            axios.get(`${domain}/articles/${this.id}`).then((data) => {
+                let t = new Date(data.data.addtime);
+                data.data.addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
+                data.data.articleAuthor = `${data.data.articleAuthor} |`;
+                data.data.articleCategory = `${data.data.articleCategory} |`;
+                this.article = data.data;
             })
         }
     }

@@ -2,7 +2,7 @@
     <menu>
         <ul>
             <li @click="$router.replace('/');checkMenu($event)" style="background:#032d5c">首页</li>
-            <li v-for="(item, index) in categorys" :key="index" v-text="item" @click="$router.replace('/article/category/'+item);checkMenu($event)"></li>
+            <li v-for="(item, index) in categorys" :key="index" v-text="item" @click="$router.replace('/articles/category/'+item);checkMenu($event)"></li>
             <div class="exam" @click="$router.replace('/exam')">考试中心</div>
         </ul>
         <!-- <div class="exam" onclick="alert('敬请期待～')">考试中心</div> -->

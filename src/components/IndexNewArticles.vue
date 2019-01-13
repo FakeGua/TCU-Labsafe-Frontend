@@ -9,13 +9,13 @@
         <div v-if="loadingFail" class="alert alert-danger" role="alert">
             加载失败！请检查网络或联系管理员。
         </div>
-        <div class="article" v-for="(item, index) in articles" :key="index" @click="$router.push('/article/'+item.id)">
-            <div class="title h4" v-text="item.article_title"></div>
+        <div class="article" v-for="(item, index) in articles" :key="index" @click="$router.push('/articles/'+item.id)">
+            <div class="title h4" v-text="item.articleTitle"></div>
             <div class="info text-muted">
-                {{item.article_author}} | {{item.article_category}} | {{item.addtime}}
+                {{item.articleAuthor}} | {{item.articleCategory}} | {{item.addtime}}
             </div>
             <div class="context">
-                <h5 class="d-inline-block"><span class="badge badge-light badge-pill">摘要</span></h5>&nbsp;<span v-text="item.article_body"></span>
+                <h5 class="d-inline-block"><span class="badge badge-light badge-pill">摘要</span></h5>&nbsp;<span v-text="item.articleBody"></span>
             </div>
         </div>
         <div v-if="!(loading) && !(loadingFail)" class="hint text-muted">
@@ -76,11 +76,11 @@
             }
         },
         mounted() {
-            axios.get(`${domain}/article/getindex`).then((data) => {
+            axios.get(`${domain}/articles/`).then((data) => {
                 data.data.forEach((element, index, arr) => {
                     let t = new Date(element.addtime);
                     element.addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
-                    element.article_body = element.article_body.match(regexp)? element.article_body.match(regexp).join(''): element.article_body;
+                    element.articleBody = element.articleBody.match(regexp)? element.articleBody.match(regexp).join(''): element.articleBody;
                 });
                 this.articles = data.data;
                 this.loading = false;

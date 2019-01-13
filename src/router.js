@@ -27,7 +27,7 @@ export default new Router({
           }
         },
         {
-          path: 'article/category/:cy',
+          path: 'articles/category/:cy',
           components: {
             leftmenu: IndexMenu,
             right: IndexArticles
@@ -37,7 +37,7 @@ export default new Router({
           }
         },
         {
-          path: 'article/:id',
+          path: 'articles/:id',
           components: {
             leftmenu: IndexMenu,
             right: IndexArticle
