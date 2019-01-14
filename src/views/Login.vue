@@ -130,17 +130,29 @@
                 let x = document.getElementById('login');
                 let formData = new FormData(x);
                 if (x.checkValidity()) {
-                    axios.post(`${domain}/login`, {
+                    axios.post(`${domain}/login/`, {
                         username: formData.get('username'),
                         password: formData.get('password')
                     }).then((data) => {
-                        document.getElementById('login-hint').setAttribute('value', `${data.data.msg}`);
-                        if (data.data.canLogin) {
-                            let userInfo = data.data.data;
+                        let loginState;
+                        switch (data.data.loginState) {
+                            case 0:
+                                loginState = '用户不存在，请先注册'
+                                break;
+                            case 1:
+                                loginState = '登录成功'
+                                break;
+                            case 2:
+                                loginState = '密码错误'
+                                break;
+                        }
+                        document.getElementById('login-hint').setAttribute('value', `${loginState}`);
+                        if (data.data.loginState === 1) {
+                            let userInfo = data.data.user;
                             this.$store.state.isLogined = true;
                             this.$store.state.username = userInfo.username;
-                            this.$store.state.name = userInfo.user_name;
-                            this.$store.state.phone = userInfo.user_phone;
+                            this.$store.state.name = userInfo.userName;
+                            this.$store.state.phone = userInfo.userPhone;
                             this.$router.replace('/exam');
                         }
                     }).catch((err) => {
