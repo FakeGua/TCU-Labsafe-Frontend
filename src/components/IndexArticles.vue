@@ -88,7 +88,7 @@
 		methods: {
 			currentChange(c) {
 				this.currentPage = c;
-				this.getArticle(c);
+				this.getArticles(c);
 			},
 			getArticles(pageNum) {
 				this.loading = true;

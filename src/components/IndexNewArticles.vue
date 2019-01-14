@@ -87,14 +87,14 @@
 			};
 		},
 		mounted() {
-			this.getArticle(1);
+			this.getArticles(1);
 		},
 		methods: {
 			currentChange(c) {
 				this.currentPage = c;
-				this.getArticle(c);
+				this.getArticles(c);
 			},
-			getArticle(pageNum) {
+			getArticles(pageNum) {
 				this.loading = true;
 				this.loadingFail = false;
 				this.articles = [];
