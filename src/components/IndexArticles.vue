@@ -17,7 +17,17 @@
 				<span v-text="item.articleBody"></span>
 			</div>
 		</div>
-		<div v-if="!(loading) && !(loadingFail)" class="hint text-muted">没有更多啦！</div>
+		<div v-if="!(loading) && !(loadingFail)" class="hint text-muted">
+			<!-- 没有更多啦！ -->
+			<!-- 仅显示最新十条，更多内容请前往左侧文章分类查看。 -->
+			<el-pagination
+				@current-change="currentChange"
+				:current-page="currentPage"
+				layout="prev, pager, next"
+				:page-count="pageCount"
+				background
+			></el-pagination>
+		</div>
 	</div>
 </template>
 
@@ -67,43 +77,36 @@
 			return {
 				articles: [],
 				loading: true,
-				loadingFail: false
+				loadingFail: false,
+				currentPage: 1,
+				pageCount: 1
 			};
 		},
 		mounted() {
-			axios
-				.get(`${domain}/articles/category/${this.cy}`)
-				.then(data => {
-					data.data.forEach((element, index, arr) => {
-						let t = new Date(element.addtime);
-						element.addtime = `${t.getFullYear()}-${t.getMonth() +
-							1}-${t.getDate()}`;
-						element.articleBody = element.articleBody.match(regexp)
-							? element.articleBody.match(regexp).join("")
-							: element.articleBody;
-					});
-					this.articles = data.data;
-					this.loading = false;
-				})
-				.catch(err => {
-					this.loading = false;
-					this.loadingFail = true;
-					console.error(err);
-				});
+			this.getArticles(1);
 		},
-		watch: {
-			$route(to, from) {
+		methods: {
+			currentChange(c) {
+				this.currentPage = c;
+				this.getArticle(c);
+			},
+			getArticles(pageNum) {
+				this.loading = true;
+				this.loadingFail = false;
+				this.articles = [];
 				axios
-					.get(`${domain}/articles/category/${this.cy}`)
+					.get(`${domain}/articles/category/${this.cy}?pageNum=${pageNum}`)
 					.then(data => {
-						data.data.forEach((element, index, arr) => {
+						data.data.articleList.forEach((element, index, arr) => {
 							let t = new Date(element.addtime);
 							element.addtime = `${t.getFullYear()}-${t.getMonth() +
 								1}-${t.getDate()}`;
-							// element.article_body = element.article_body.match(/[^<>/\'"-=:、（）宋体\w]/g).join('');
-							element.articleBody = element.articleBody.match(regexp).join("");
+							element.articleBody = element.articleBody.match(regexp)
+								? element.articleBody.match(regexp).join("")
+								: element.articleBody;
 						});
-						this.articles = data.data;
+						this.articles = data.data.articleList;
+						this.pageCount = data.data.pageCount;
 						this.loading = false;
 					})
 					.catch(err => {
@@ -111,6 +114,11 @@
 						this.loadingFail = true;
 						console.error(err);
 					});
+			}
+		},
+		watch: {
+			$route(to, from) {
+				this.getArticles(1);
 			}
 		}
 	};
