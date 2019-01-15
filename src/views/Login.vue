@@ -167,17 +167,17 @@
                 let formData = new FormData(x);
                 if (x.checkValidity()) {
                     this.$message('正在注册...');
-                    axios.post(`${domain}/register`, {
+                    axios.post(`${domain}/register/`, {
                         username: formData.get('username'),
                         password: formData.get('password'),
-                        name: formData.get('name'),
-                        phone: formData.get('phone')
+                        userName: formData.get('name'),
+                        userPhone: formData.get('phone')
                     }).then((data) => {
-                        if(data.data.canRegister){                        
+                        if(data.data.registerState){                        
                             this.dialogFormVisible = false;
-                            this.$message.success(data.data.msg);
+                            this.$message.success("注册成功");
                         }else{
-                            this.$message.error(data.data.msg);
+                            this.$message.error("此账号已存在，请勿重复注册（忘记密码请联系管理员）");
                         }
                     }).catch((err) => {
                         console.error(err);
