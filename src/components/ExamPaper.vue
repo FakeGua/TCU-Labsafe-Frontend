@@ -9,66 +9,61 @@
 				<div class="text-muted">考试时间：60分钟</div>
 				<hr>
 				<br>
-				<div class="question-container">
-					<div
-						v-if="questions.length>=1"
-						class="question"
-						v-for="(item, index) in questions"
-						:key="index"
-					>
-						<h6>{{index+1}}、 {{item.question_title}}</h6>
+				<div v-if="questions.length>=1" class="question-container">
+					<div class="question" v-for="(item, index) in questions" :key="index">
+						<h6>{{index+1}}、 {{item.questionTitle}}</h6>
 						<hr>
-						<div v-if="item.question_category=='选择题'" class="options">
+						<div v-if="item.questionCategory=='选择题'" class="options">
 							<div class="row">
 								<div class="col-6">
 									<div
 										class="option"
 										data-option="a"
-										v-if="item.option_a"
-										@click="chooseOption(index,'a',item.question_mark,$event)"
+										v-if="item.optionA"
+										@click="chooseOption(index,'a',item.questionMark,$event)"
 									>
 										<span>A</span>
-										{{item.option_a}}
+										{{item.optionA}}
 									</div>
 									<div
 										class="option"
 										data-option="c"
-										v-if="item.option_c"
-										@click="chooseOption(index,'c',item.question_mark,$event)"
+										v-if="item.optionC"
+										@click="chooseOption(index,'c',item.questionMark,$event)"
 									>
 										<span>C</span>
-										{{item.option_c}}
+										{{item.optionC}}
 									</div>
 								</div>
 								<div class="col-6">
 									<div
 										class="option"
 										data-option="b"
-										v-if="item.option_b"
-										@click="chooseOption(index,'b',item.question_mark,$event)"
+										v-if="item.optionB"
+										@click="chooseOption(index,'b',item.questionMark,$event)"
 									>
 										<span>B</span>
-										{{item.option_b}}
+										{{item.optionB}}
 									</div>
 									<div
 										class="option"
 										data-option="d"
-										v-if="item.option_d"
-										@click="chooseOption(index,'d',item.question_mark,$event)"
+										v-if="item.optionD"
+										@click="chooseOption(index,'d',item.questionMark,$event)"
 									>
 										<span>D</span>
-										{{item.option_d}}
+										{{item.optionD}}
 									</div>
 								</div>
 							</div>
 						</div>
-						<div v-if="item.question_category=='判断题'" class="options">
+						<div v-if="item.questionCategory=='判断题'" class="options">
 							<div class="row">
 								<div class="col-6">
 									<div
 										class="option"
 										data-option="t"
-										@click="chooseOption(index,'t',item.question_mark,$event)"
+										@click="chooseOption(index,'t',item.questionMark,$event)"
 									>
 										<span>True</span>
 									</div>
@@ -77,7 +72,7 @@
 									<div
 										class="option"
 										data-option="f"
-										@click="chooseOption(index,'f',item.question_mark,$event)"
+										@click="chooseOption(index,'f',item.questionMark,$event)"
 									>
 										<span>False</span>
 									</div>
@@ -217,7 +212,7 @@
 			allMarks: function() {
 				let m = 0;
 				for (let i in this.questions) {
-					m += this.questions[i].question_mark;
+					m += this.questions[i].questionMark;
 				}
 				return m;
 			},
@@ -242,14 +237,14 @@
 			}, 1000);
 			//获取题目
 			axios
-				.get(`${domain}/exam/getexamquestions?exampaper=${this.ep}`)
+				.get(`${domain}/exam/exampaper/${this.ep}`)
 				.then(data => {
 					if (data.data.length != 0) {
 						for (let i = 0; i < data.data.length; i++) {
 							let t = new Date(data.data[i].addtime);
 							data.data[i].addtime = `${t.getFullYear()}-${t.getMonth() +
 								1}-${t.getDate()}`;
-							this.answers.push(data.data[i].question_answer);
+							this.answers.push(data.data[i].questionAnswer);
 						}
 						this.questions = data.data;
 					}
@@ -312,13 +307,13 @@
 						o.push(item.option);
 					});
 					axios
-						.post(`${domain}/exam/addfinishedexampaper`, {
+						.post(`${domain}/exam/finishedexampapers`, {
 							username: this.$store.state.username,
 							finishedExampaper: this.ep,
 							finishedScore: score,
-							finishedOptions: o
+							finishedOptions: JSON.stringify(o)
 						})
-						.then(() => {
+						.then(data => {
 							if (score >= 60) {
 								this.$message.closeAll();
 								this.$alert(`你的成绩为${score},恭喜及格。`, "提交成功", {
