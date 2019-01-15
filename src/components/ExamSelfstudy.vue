@@ -7,36 +7,36 @@
                 <el-switch v-model="showAnswersSwitch" active-color="#043c7a" active-text="显示答案" inactive-text="隐藏答案" @change="showAnswers"></el-switch>
             </div>
         </div>
-        <div class="question-container">
-            <div v-if="questions.length>=1" class="question" v-for="(item, index) in questions" :key="index">
-                <h6>{{index+1}}、 {{item.question_title}}</h6>
+        <div v-if="questions.length>=1" class="question-container">
+            <div  class="question" v-for="(item, index) in questions" :key="index">
+                <h6>{{index+1}}、 {{item.questionTitle}}</h6>
                 <hr>
-                <div v-if="item.question_category=='选择题'" class="options">
+                <div v-if="item.questionCategory=='选择题'" class="options">
                     <div class="row">
                         <div class="col-6">
-                            <div class="option" data-option="a" v-if="item.option_a" @click="chooseOption(index,'a',item.question_answer,$event)"><span>A</span>{{item.option_a}}</div>
-                            <div class="option" data-option="c" v-if="item.option_c" @click="chooseOption(index,'c',item.question_answer,$event)"><span>C</span>{{item.option_c}}</div>
+                            <div class="option" data-option="a" v-if="item.optionA" @click="chooseOption(index,'a',item.questionAnswer,$event)"><span>A</span>{{item.optionA}}</div>
+                            <div class="option" data-option="c" v-if="item.optionC" @click="chooseOption(index,'c',item.questionAnswer,$event)"><span>C</span>{{item.optionC}}</div>
                         </div>
                         <div class="col-6">
-                            <div class="option" data-option="b" v-if="item.option_b" @click="chooseOption(index,'b',item.question_answer,$event)"><span>B</span>{{item.option_b}}</div>
-                            <div class="option" data-option="d" v-if="item.option_d" @click="chooseOption(index,'d',item.question_answer,$event)"><span>D</span>{{item.option_d}}</div>
+                            <div class="option" data-option="b" v-if="item.optionB" @click="chooseOption(index,'b',item.questionAnswer,$event)"><span>B</span>{{item.optionB}}</div>
+                            <div class="option" data-option="d" v-if="item.optionD" @click="chooseOption(index,'d',item.questionAnswer,$event)"><span>D</span>{{item.optionD}}</div>
                         </div>
                     </div>
                 </div>
-                <div v-if="item.question_category=='判断题'" class="options">
+                <div v-if="item.questionCategory=='判断题'" class="options">
                     <div class="row">
                         <div class="col-6">
-                            <div class="option" data-option="t" @click="chooseOption(index,'t',item.question_answer,$event)"><span>True</span></div>
+                            <div class="option" data-option="t" @click="chooseOption(index,'t',item.questionAnswer,$event)"><span>True</span></div>
                         </div>
                         <div class="col-6">
-                            <div class="option" data-option="f" @click="chooseOption(index,'f',item.question_answer,$event)"><span>False</span></div>
+                            <div class="option" data-option="f" @click="chooseOption(index,'f',item.questionAnswer,$event)"><span>False</span></div>
                         </div>
                     </div>
                 </div>
                 <div class="explain d-none">
                     <hr>
                     <h6>解析：</h6>
-                    <span v-text="item.question_explain? item.question_explain:'无'"></span>
+                    <span v-text="item.questionExplain? item.questionExplain:'无'"></span>
                 </div>
             </div>
         </div>
@@ -116,12 +116,12 @@
         },
         computed: {},
         mounted() {
-            axios.get(`${domain}/exam/getselfstudyquestions`).then((data) => {
+            axios.get(`${domain}/exam/selfstudyquestions/`).then((data) => {
                 if (data.data.length != 0) {
                     for (let i = 0; i < data.data.length; i++) {
                         let t = new Date(data.data[i].addtime);
                         data.data[i].addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
-                        this.answers.push(data.data[i].question_answer);
+                        this.answers.push(data.data[i].questionAnswer);
                     }
                     this.questions = data.data;
                 }

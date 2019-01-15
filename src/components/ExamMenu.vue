@@ -2,9 +2,9 @@
     <menu>
         <ul>
             <li @click="$router.replace('/exam');checkMenu($event)" style="background:#032d5c">个人中心</li>
-            <li @click="$router.replace('/exam/selfstudy');checkMenu($event)">自学</li>
-            <li @click="$router.replace('/exam/category/自测');checkMenu($event)">自测</li>
-            <li @click="$router.replace('/exam/category/考试');checkMenu($event)">考试</li>
+            <li @click="$router.replace('/exam/selfstudyquestions');checkMenu($event)">自学</li>
+            <li @click="$router.replace('/exam/exampapers/自测');checkMenu($event)">自测</li>
+            <li @click="$router.replace('/exam/exampapers/考试');checkMenu($event)">考试</li>
             <li @click="$router.replace('/exam/download');checkMenu($event)">课件资料</li>
             <div class="exam" @click="$router.replace('/')">回到首页</div>
         </ul>
@@ -60,9 +60,6 @@
             return {}
         },
         mounted() {
-            if (!this.$store.state.isLogined) {
-                this.$router.replace('/login');
-            }
         },
         methods: {
             checkMenu(event) {

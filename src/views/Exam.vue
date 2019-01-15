@@ -69,6 +69,9 @@
         },
         mounted() {
             // console.log(this.$store.state);
+            if (!this.$store.state.isLogined) {
+                this.$router.replace('/login');
+            }
         },
     }
 </script>
