@@ -8,7 +8,7 @@
 		>
 			<img src="../assets/exam/exampapersTitle.svg" alt>
 			<div>
-				<div class="title h4" v-text="item.exampaper_title"></div>
+				<div class="title h4" v-text="item.exampaperTitle"></div>
 				<div class="info text-muted">{{item.addtime}}</div>
 			</div>
 			<img src="../assets/exam/exampapersTitle.svg" alt>
@@ -67,7 +67,7 @@
 		methods: {
 			initPage() {
 				axios
-					.get(`${domain}/exam/getexampapers?category=${this.cy}`)
+					.get(`${domain}/exam/exampapers/${this.cy}`)
 					.then(data => {
 						data.data.forEach((element, index, arr) => {
 							let t = new Date(element.addtime);
@@ -83,7 +83,7 @@
 			},
 			judgeFinished(item) {
 				if (
-					this.$store.state.unFinishedExampapers.includes(item.exampaper_title)
+					this.$store.state.unFinishedExampapers.includes(item.exampaperTitle)
 				) {
 					this.$confirm(
 						"考试时间为60分钟，请确保考试途中网络畅通以及无他人干扰。",
@@ -94,7 +94,7 @@
 							type: "warning"
 						}
 					).then(result => {
-                        this.$router.push("/exampaper/" + item.exampaper_title);
+                        this.$router.push("/exampaper/" + item.exampaperTitle);
 					});
 				} else {
 					this.$message.error("你已经做过这套试卷了。");
