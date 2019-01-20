@@ -9,13 +9,14 @@ import IndexArticles from './components/IndexArticles'
 import ExamMenu from './components/ExamMenu'
 import ExamPapers from './components/ExamPapers'
 import ExamPaper from './components/ExamPaper'
-import ExamDownload from './components/ExamDownload'
+import ExamFiles from './components/ExamFiles'
 import ExamSelfstudy from './components/ExamSelfstudy'
 import ExamUser from './components/ExamUser'
 
 Vue.use(Router)
 
 export default new Router({
+  mode:'history',
   routes: [{
       path: '/',
       component: Home,
@@ -63,13 +64,13 @@ export default new Router({
           right: ExamUser
         }
       }, {
-        path: 'selfstudy',
+        path: 'selfstudyquestions',
         components: {
           leftmenu: ExamMenu,
           right: ExamSelfstudy
         }
       }, {
-        path: 'category/:cy',
+        path: 'exampapers/:cy',
         components: {
           leftmenu: ExamMenu,
           right: ExamPapers
@@ -78,10 +79,10 @@ export default new Router({
           right: true
         }
       }, {
-        path: 'download',
+        path: 'files',
         components: {
           leftmenu: ExamMenu,
-          right: ExamDownload
+          right: ExamFiles
         }
       }]
     },
