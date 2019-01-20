@@ -116,6 +116,7 @@
 <script>
     import axios from 'axios'
     import domain from '../libs/domain'
+    import classList from '../libs/classList'
     export default {
         name: 'login',
         data: () => {
@@ -153,6 +154,7 @@
                             this.$store.state.username = userInfo.username;
                             this.$store.state.name = userInfo.userName;
                             this.$store.state.phone = userInfo.userPhone;
+                            this.$store.state.class = userInfo.userClass;
                             this.$router.replace('/exam');
                         }
                     }).catch((err) => {
@@ -167,11 +169,24 @@
                 let formData = new FormData(x);
                 if (x.checkValidity()) {
                     this.$message('正在注册...');
+                    //开始班级信息处理
+                    let learnNumber = formData.get('username');
+                    let userProfession = '物联网工程';
+                    let c = learnNumber.slice(4,6);
+                    for(let i in classList){
+                        if(i == c){
+                            userProfession = classList[i];
+                        }
+                    }
+                    let userClass = '2'; 
+                    userClass = learnNumber.slice(7,8);
+                    //结束班级信息处理
                     axios.post(`${domain}/register/`, {
                         username: formData.get('username'),
                         password: formData.get('password'),
                         userName: formData.get('name'),
-                        userPhone: formData.get('phone')
+                        userPhone: formData.get('phone'),
+                        userClass: userProfession + userClass + '班'
                     }).then((data) => {
                         if(data.data.registerState){                        
                             this.dialogFormVisible = false;

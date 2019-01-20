@@ -9,6 +9,8 @@ export default new Vuex.Store({
       isLogined: false,
       username: '',
       name: '',
+      phone:'',
+      class:'',
       unFinishedExampapers:[]
     }
   },

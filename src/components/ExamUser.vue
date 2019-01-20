@@ -79,6 +79,19 @@
 						</el-input>
 					</div>
 				</div>
+				<br>
+				<div class="row">
+					<div class="col-6">
+						<el-input readonly v-model="this.$store.state.class">
+							<template slot="prepend">班级</template>
+						</el-input>
+					</div>
+					<div class="col-6">
+						<el-input readonly v-model="this.$store.state.phone">
+							<template slot="prepend">联系方式</template>
+						</el-input>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
