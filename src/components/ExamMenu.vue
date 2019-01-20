@@ -5,7 +5,7 @@
             <li @click="$router.replace('/exam/selfstudyquestions');checkMenu($event)">自学</li>
             <li @click="$router.replace('/exam/exampapers/自测');checkMenu($event)">自测</li>
             <li @click="$router.replace('/exam/exampapers/考试');checkMenu($event)">考试</li>
-            <li @click="$router.replace('/exam/download');checkMenu($event)">课件资料</li>
+            <li @click="$router.replace('/exam/files');checkMenu($event)">课件资料</li>
             <div class="exam" @click="$router.replace('/')">回到首页</div>
         </ul>
     </menu>
