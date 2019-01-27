@@ -67,7 +67,7 @@
 		methods: {
 			initPage() {
 				axios
-					.get(`${domain}/exam/exampapers/${this.cy}`)
+					.get(`${domain}/exam/exampapers?category=${this.cy}`)
 					.then(data => {
 						data.data.forEach((element, index, arr) => {
 							let t = new Date(element.addtime);

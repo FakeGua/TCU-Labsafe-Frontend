@@ -237,7 +237,7 @@
 			}, 1000);
 			//获取题目
 			axios
-				.get(`${domain}/exam/exampaper/${this.ep}`)
+				.get(`${domain}/exam/exampapers/${this.ep}`)
 				.then(data => {
 					if (data.data.length != 0) {
 						for (let i = 0; i < data.data.length; i++) {
