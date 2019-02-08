@@ -36,6 +36,7 @@
 <script>
     import axios from 'axios';
     import domain from '../libs/domain';
+	import formatTime from '../libs/formatTime';
     export default {
         name: 'indexarticle',
         props: ['id'],
@@ -46,7 +47,7 @@
         },
         mounted() {
             axios.get(`${domain}/articles/${this.id}`).then((data) => {
-                let t = new Date(data.data.addtime);
+                let t = new Date(formatTime(data.data.addtime));
                 data.data.addtime = `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
                 data.data.articleAuthor = `${data.data.articleAuthor} |`;
                 data.data.articleCategory = `${data.data.articleCategory} |`;

@@ -169,6 +169,7 @@
 <script>
 	import axios from "axios";
 	import domain from "../libs/domain";
+	import formatTime from '../libs/formatTime';
 	export default {
 		name: "examuser",
 		data() {
@@ -187,7 +188,7 @@
 						.then(data => {
 							this.exampapers = data.data;
 							this.exampapers.forEach(item => {
-								let t = new Date(item.addtime);
+								let t = new Date(formatTime(item.addtime));
 								item.addtime = `${t.getFullYear()}年${t.getMonth() +
 									1}月${t.getDate()}日`;
 							});
@@ -200,7 +201,7 @@
 								.then(data => {
 									this.finishedExampapers = data.data;
 									this.finishedExampapers.forEach(item => {
-										let t = new Date(item.addtime);
+										let t = new Date(formatTime(item.addtime));
 										item.addtime = `${t.getFullYear()}年${t.getMonth() +
 											1}月${t.getDate()}日`;
 									});

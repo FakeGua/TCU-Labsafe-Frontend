@@ -8,7 +8,7 @@
 			:key="index"
 			@click="$router.push('/articles/'+item.id)"
 		>
-			<div class="title h4" v-text="item.articleTitle"></div>
+			<div class="title h4 article-title" v-text="item.articleTitle"></div>
 			<div class="info text-muted">{{item.articleAuthor}} | {{item.articleCategory}} | {{item.addtime}}</div>
 			<div class="context">
 				<h5 class="d-inline-block">
@@ -62,6 +62,11 @@
 			margin: 50px auto 10px auto;
 			font-size: 18px;
 		}
+		.article-title {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
 	}
 </style>
 
@@ -70,6 +75,7 @@
 	import axios from "axios";
 	import domain from "../libs/domain";
 	import regexp from "../libs/regexp";
+	import formatTime from '../libs/formatTime';
 	export default {
 		name: "indexcategory",
 		props: ["cy"],
@@ -98,7 +104,7 @@
 					.get(`${domain}/articles/category/${this.cy}?pageNum=${pageNum}`)
 					.then(data => {
 						data.data.articleList.forEach((element, index, arr) => {
-							let t = new Date(element.addtime);
+							let t = new Date(formatTime(element.addtime));
 							element.addtime = `${t.getFullYear()}-${t.getMonth() +
 								1}-${t.getDate()}`;
 							element.articleBody = element.articleBody.match(regexp)

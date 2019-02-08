@@ -196,6 +196,7 @@
 <script>
 	import axios from "axios";
 	import domain from "../libs/domain";
+	import formatTime from '../libs/formatTime';
 	export default {
 		name: "exampaper",
 		props: ["ep"],
@@ -241,7 +242,7 @@
 				.then(data => {
 					if (data.data.length != 0) {
 						for (let i = 0; i < data.data.length; i++) {
-							let t = new Date(data.data[i].addtime);
+							let t = new Date(formatTime(data.data[i].addtime));
 							data.data[i].addtime = `${t.getFullYear()}-${t.getMonth() +
 								1}-${t.getDate()}`;
 							this.answers.push(data.data[i].questionAnswer);

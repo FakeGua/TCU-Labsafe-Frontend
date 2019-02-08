@@ -75,6 +75,7 @@
 <script>
 	import axios from "axios";
 	import domain from "../libs/domain";
+	import formatTime from '../libs/formatTime';
 	export default {
 		name: "examfiles",
 		data: () => {
@@ -105,7 +106,7 @@
 				.get(`${domain}/files/`)
 				.then(data => {
 					data.data.forEach((element, index, arr) => {
-						let t = new Date(element.addtime);
+						let t = new Date(formatTime(element.addtime));
 						element.addtime = `${t.getFullYear()}-${t.getMonth() +
 							1}-${t.getDate()}`;
 					});
