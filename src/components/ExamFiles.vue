@@ -11,8 +11,9 @@
 						:key="index"
 						@click="downloadFile(item.fileName,item.fileCategory)"
 					>
-						<img src="../assets/exam/ppt.svg" alt>
-						<div class="title h4" v-text="item.fileName"></div>
+						<!-- <img src="../assets/exam/ppt.svg" alt> -->
+						<img src="../assets/exam/wenjian.svg" alt>
+						<div class="title h4">{{item.fileName}}.{{item.fileCategory}}</div>
 						<div class="info text-muted">文件上传日期：{{item.addtime}}</div>
 					</div>
 				</div>
@@ -25,8 +26,8 @@
 						:key="index"
 						@click="downloadFile(item.fileName,item.fileCategory)"
 					>
-						<img src="../assets/exam/ppt.svg" alt>
-						<div class="title h4" v-text="item.fileName"></div>
+						<img src="../assets/exam/wenjian.svg" alt>
+						<div class="title h4">{{item.fileName}}.{{item.fileCategory}}</div>
 						<div class="info text-muted">文件上传日期：{{item.addtime}}</div>
 					</div>
 				</div>
@@ -50,9 +51,9 @@
 		overflow: hidden;
 		img {
 			position: absolute;
-			top: -10px;
-			left: -20px;
-			width: 120px; // color: lightgray;
+			top: 5px;
+			left: -15px;
+			width: 150px; // color: lightgray;
 		}
 		&:hover {
 			box-shadow: 2px 2px 30px lightgray;
