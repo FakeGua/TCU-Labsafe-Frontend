@@ -169,7 +169,7 @@
 <script>
 	import axios from "axios";
 	import domain from "../libs/domain";
-	import formatTime from '../libs/formatTime';
+	import formatTime from "../libs/formatTime";
 	export default {
 		name: "examuser",
 		data() {
@@ -214,6 +214,7 @@
 												this.finishedExampapers[j].finishedExampaper
 											) {
 												this.unFinishedExampapers.splice(i, 1);
+												i--;
 											}
 										}
 									}
