@@ -4,12 +4,13 @@
 			<div class="head" @click="updateUsername">
 				<div class="head-text" v-text="headText"></div>
 			</div>
-			<div class="h3">你好 ，{{this.$store.state.name}} 。</div>
+			<br>
+			<div class="h4">你好 ，{{this.$store.state.name}} 。</div>
 		</div>
 		<br>
 		<div class="content">
 			<div>
-				<h3>未完成试卷</h3>
+				<h4>未完成试卷</h4>
 				<hr>
 				<div class="row">
 					<div class="col-6">
@@ -33,7 +34,7 @@
 			<br>
 			<br>
 			<div>
-				<h3>已完成试卷</h3>
+				<h4>已完成试卷</h4>
 				<hr>
 				<div class="row">
 					<div class="col-6">
@@ -65,7 +66,7 @@
 			<br>
 			<br>
 			<div>
-				<h3>个人资料</h3>
+				<h4>个人资料</h4>
 				<hr>
 				<div class="row">
 					<div class="col-6">
@@ -104,7 +105,7 @@
 		margin: auto;
 		.header {
 			padding: 30px 0;
-			height: 300px;
+			height: 280px;
 			background: lighten($tcuColor, 0.5);
 			display: flex;
 			flex-direction: column;
@@ -214,7 +215,7 @@
 												this.finishedExampapers[j].finishedExampaper
 											) {
 												this.unFinishedExampapers.splice(i, 1);
-												i--;
+												if (i > 0) i--;
 											}
 										}
 									}

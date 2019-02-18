@@ -11,7 +11,7 @@
 			:key="index"
 			@click="$router.push('/articles/'+item.id)"
 		>
-			<div class="title h4 article-title" v-text="item.articleTitle"></div>
+			<div class="title h5 article-title" v-text="item.articleTitle"></div>
 			<div class="info text-muted">{{item.articleAuthor}} | {{item.articleCategory}} | {{item.addtime}}</div>
 			<div class="context">
 				<h5 class="d-inline-block">

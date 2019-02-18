@@ -19,13 +19,13 @@
         transform: translate(-50%, -50%);
         width: 80%;
         ul {
-            font-size: 18px;
+            font-size: 16px;
             padding: 0;
             text-align: center;
             list-style: none;
             li {
-                padding: 10px 60px;
-                margin: 5px 0;
+                padding: 6px 60px;
+                margin: 6px 0;
                 border-radius: 10px;
                 transition: .2s;
                 &:hover {
@@ -40,7 +40,7 @@
             padding: 10px 60px;
             border-radius: 30px;
             border: 2px solid white;
-            margin-top: 30px;
+            margin-top: 10px;
             transition: .2s;
             &:hover {
                 color: $tcuColor;
